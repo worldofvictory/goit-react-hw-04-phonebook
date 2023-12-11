@@ -1,28 +1,30 @@
-import { Component } from "react";
+import { useState } from "react";
 import css from './contactform.module.css'
 
-class ContactForm extends Component{
-    state = {
-    name: '',
-    number:''
-    }
 
-    handleSubmit = (e) => {
+
+const ContactForm = (submit) => {
+    const [name, setName] = useState('')
+    const [number, setNumber] = useState('')
+
+ const handleSubmit = (e) => {
    e.preventDefault();
-   this.props.submit(this.state);
-   this.reset();
+  submit ({
+           name,
+           number,
+  })
+   reset();
     }
-
     reset = () => {
-       this.setState({name:'', number:''})
+        setName({ name: '' })
+        setNumber ({number: '' })
+    }
+       handleChange= ({ target:{ value, name}}) =>{
+    if (name === 'name') setName(value)
     }
 
-    handleChange= ({ target:{ value, name}}) =>{
-    this.setState({[name]:value})
-    }
-    render() {
-   return (
-    <form onSubmit={this.handleSubmit}>
+  return (
+    <form onSubmit={handleSubmit}>
   <div className={css.mb}>
     <label htmlFor="Name" className="form-label">
   Name
@@ -30,8 +32,8 @@ class ContactForm extends Component{
                     <input
          pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
          required
-         value={this.state.name}
-         onChange={this.handleChange}
+         value={name}
+         onChange={handleChange}
          name="name"
          type="text"
          className="form-control"
@@ -43,8 +45,8 @@ class ContactForm extends Component{
            </label>
             <input
            pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
-              value={this.state.number}
-                        onChange={this.handleChange}
+              value={number}
+                        onChange={handleChange}
                         name="number"
                         type="number"
                         className="form-control"
@@ -54,7 +56,19 @@ class ContactForm extends Component{
                             Add contact
                         </button>
 </form>
-        )
-    }
+  )
 }
+
 export default ContactForm
+
+
+
+
+
+
+  
+
+    
+
+ 
+  
