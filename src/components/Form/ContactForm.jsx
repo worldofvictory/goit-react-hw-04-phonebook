@@ -5,23 +5,31 @@ import css from './contactform.module.css'
 
 const ContactForm = (submit) => {
     const [name, setName] = useState('')
-    const [number, setNumber] = useState('')
+  const [number, setNumber] = useState('')
+  const handleChange = (event) => {
+        const { name, value } = event.currentTarget;
+        switch (name) {
+            case 'name':
+                setName(value);
+                break;
+            
+            case 'number':
+                setNumber(value);
+                break;
+            
+            default:
+                return;
+        }
+    }
+
 
  const handleSubmit = (e) => {
    e.preventDefault();
-  submit ({
-           name,
-           number,
-  })
-   reset();
+   submit(name, number);
+  setName({ name: '' })
+  setNumber ({number: '' })
     }
-    reset = () => {
-        setName({ name: '' })
-        setNumber ({number: '' })
-    }
-       handleChange= ({ target:{ value, name}}) =>{
-    if (name === 'name') setName(value)
-    }
+     
 
   return (
     <form onSubmit={handleSubmit}>
